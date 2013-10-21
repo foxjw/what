@@ -1,0 +1,22 @@
+#!/bin/bash
+#
+# This is a totally inelegant hack-job, and there are probably about a thousand better ways to do this.
+# But the purpose is to scan a directory and subdirectories for files containing a particular string,
+# and output a list of the file path/names.
+#
+if [[ ($# != 2) ||  (! -d $2) ]]
+then 
+fmt <<'EOF'
+
+Search directory and all subdirectories for files containing a particular string, and display only the filenames.
+
+Usage: lookfor [string] [path]
+  Where:
+    [string] is the text to be searched for. If [string] contains spaces, it must be enclosed in quotes. Other special characters should be escaped with a backslash (\)
+
+    [path] may be relative or absolute, but must be a valid directory.
+
+EOF
+else
+	find "$2" -type f -print0 | xargs -0 grep "$1" -sl
+fi
