@@ -4,19 +4,35 @@
 # But the purpose is to scan a directory and subdirectories for files containing a particular string,
 # and output a list of the file path/names.
 #
-if [[ ($# != 2) ||  (! -d $2) ]]
-then 
+while getopts ":i" opt; do
+  case $opt in
+    i)
+		GREP_OPT="-i"
+      ;;
+    \?)
+      ERR_STR="Invalid option: -$OPTARG"
+      ;;
+  esac
+shift $((OPTIND - 1))
+done
+if [[ ($# != 2) || (! -d $2) ]]
+then
+echo -e
+echo $ERR_STR
+
 fmt <<'EOF'
 
 Search directory and all subdirectories for files containing a particular string, and display only the filenames.
 
-Usage: lookfor [string] [path]
+Usage: lookfor [-i] [string] [path]
   Where:
-    [string] is the text to be searched for. If [string] contains spaces, it must be enclosed in quotes. Other special characters should be escaped with a backslash (\)
+    [-i]     Ignore case. (optional)
 
-    [path] may be relative or absolute, but must be a valid directory.
+    [string] Text to be searched for. If [string] contains spaces, it must be enclosed in quotes. Other special characters should be escaped with a backslash (\)
+
+    [path]   May be relative or absolute, but must be a valid directory.
 
 EOF
 else
-	find "$2" -type f -print0 | xargs -0 grep "$1" -sl
+        find "$2" -type f -print0 | xargs -0 grep $GREP_OPT "$1" -sl
 fi
