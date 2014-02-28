@@ -5,22 +5,20 @@
 # and output a list of the file path/names.
 #
 while getopts ":i" opt; do
-  case $opt in
-    i)
-		GREP_OPT="-i"
-      ;;
-    \?)
-      ERR_STR="Invalid option: -$OPTARG"
-      ;;
-  esac
-shift $((OPTIND - 1))
+	case $opt in
+		i)
+			GREP_OPT="-i"
+			;;
+		\?)
+			ERR_STR="\nInvalid option: -$OPTARG"
+			;;
+	esac
+	shift $((OPTIND - 1))
 done
-if [[ ($# != 2) || (! -d $2) ]]
+echo -e $ERR_STR
+if [[ ($# != 2) || (! -d $2) || ( -n "$ERR_STR" ) ]];
 then
-echo -e
-echo $ERR_STR
-
-fmt <<'EOF'
+	fmt <<'EOF'
 
 Search directory and all subdirectories for files containing a particular string, and display only the filenames.
 
