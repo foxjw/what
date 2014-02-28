@@ -19,7 +19,6 @@ def show_help():
 	print ("    [window] May be the window name/title, or a hex window ID.")
 	print ("             ID is assumed if argument begins with '0x'.")
 	print ("    [status] = 0 for decorations off, 1 for on.\r\n")
-if path.exists('/usr/bin/wmctrl') == False: run('sudo apt-get install wmctrl')
 try:
 	import gtk.gdk
 #	import whatthefuck
