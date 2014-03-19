@@ -21,7 +21,6 @@ def show_help():
 	print ("    [status] = 0 for decorations off, 1 for on.\r\n")
 try:
 	import gtk.gdk
-#	import whatthefuck
 except ImportError:
 	print ("\r\nCannot find python-gtk installed on this system.\r\n")
 	print ("Seeing as how it's written in python, and how its whole purpose is to")
